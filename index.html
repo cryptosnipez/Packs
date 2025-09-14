@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Packs — Live Pokémon Pack Openings • Crypto Project on Solana</title>
+  <meta name="description" content="Packs is a Solana‑powered project built around live Pokémon pack openings. Buy bundles in SOL, watch the stream, and track tokenomics." />
+  <meta property="og:title" content="Packs — Live Pokémon Pack Openings" />
+  <meta property="og:description" content="Buy bundles in SOL, watch live breaks, and see tokenomics." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1624704760101-4c1ca99d939e?q=80&w=1600&auto=format&fit=crop" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --yellow:#FFCB05; /* Pokémon yellow */
+      --blue:#2A75BB;   /* Pokémon blue */
+      --red:#CC0000;    /* Pokéball red */
+      --ink:#0D1B2A;
+      --bg:#f7f9ff;
+      --card:#ffffff;
+      --muted:#5b6b7a;
+      --ring: rgba(42,117,187,.25);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(255,203,5,.12), transparent),
+        radial-gradient(1200px 800px at 110% 10%, rgba(42,117,187,.10), transparent),
+        var(--bg);
+      color:var(--ink);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    .container{max-width:1100px; margin:0 auto; padding:0 20px}
+    header{position:sticky; top:0; z-index:40; backdrop-filter:saturate(180%) blur(8px); background:rgba(255,255,255,.8); border-bottom:2px solid var(--blue)}
+    .nav{display:flex; align-items:center; justify-content:space-between; height:72px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:36px; height:36px; border-radius:50%; background:conic-gradient(from 0deg, var(--red) 0 180deg, #fff 180deg 360deg); position:relative; box-shadow:0 10px 24px -12px var(--ring), inset 0 0 0 3px #000}
+    .logo:after{content:""; position:absolute; inset:50% auto auto 50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 0 0 3px #000}
+    .wordmark{font-family:"Press Start 2P", system-ui; font-size:18px; letter-spacing:1px; color:#000; text-shadow:2px 2px 0 var(--yellow), -2px -2px 0 var(--blue)}
+    nav a{font-weight:700; color:#000; text-decoration:none; margin-left:16px}
+
+    .hero{padding:80px 0 40px; display:grid; gap:28px}
+    .hero h1{font-family:"Press Start 2P"; font-size: clamp(28px, 4.5vw, 48px); line-height:1.15; margin:0}
+    .hero p{font-size: clamp(16px, 1.6vw, 20px); color:#223; max-width:800px}
+    .cta{display:flex; gap:12px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:14px; font-weight:800; border:2px solid #000; background:var(--yellow); color:#000; box-shadow:4px 4px 0 #000}
+    .btn.secondary{background:#fff}
+
+    .card{background:var(--card); border:2px solid #000; border-radius:18px; padding:20px; box-shadow:8px 8px 0 #000}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+
+    .section{padding:56px 0}
+    .section h2{font-family:"Press Start 2P"; font-size:26px; margin:0 0 12px}
+    .muted{color:var(--muted)}
+
+    .tokenomics .stat{display:flex; align-items:center; gap:12px}
+    .pill{display:inline-block; padding:6px 10px; border-radius:999px; border:2px solid #000; background:var(--blue); color:#fff; font-weight:800; box-shadow:2px 2px 0 #000}
+
+    .packs{display:grid; grid-template-columns:2fr 1.2fr; gap:24px}
+    .bundle{display:grid; gap:10px}
+    .bundle .row{display:flex; align-items:center; justify-content:space-between; gap:8px}
+    .radio{display:flex; gap:10px; align-items:center}
+    .radio input{width:18px; height:18px}
+    .price{font-weight:800}
+
+    .panel{background:linear-gradient(180deg, #fff, #f5f6ff); border:2px dashed #000; border-radius:16px; padding:14px}
+    .kicker{font-size:12px; letter-spacing:1px; text-transform:uppercase; color:#334}
+
+    .stream{aspect-ratio:16/9; background:#000; border:2px solid #000; border-radius:16px; overflow:hidden}
+    iframe{width:100%; height:100%; display:block}
+
+    footer{padding:40px 0 70px; color:#111}
+
+    @media (max-width: 980px){
+      .grid-3{grid-template-columns:1fr}
+      .packs{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="wordmark">PACKS</div>
+      </div>
+      <nav>
+        <a href="#about">What We Do</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#buy">Buy Bundles</a>
+        <a href="#stream">Live</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Live Pokémon Pack Openings • Powered by Solana</h1>
+      <p>Welcome to <strong>Packs</strong> — a crypto‑native, community‑driven live stream where we open Pokémon booster packs on air. Grab a bundle with SOL, watch the break, and we ship the hits. Gotta catch 'em all — on‑chain.</p>
+      <div class="cta">
+        <button class="btn" id="connectBtn">Connect Phantom</button>
+        <a class="btn secondary" href="#buy">Buy a Pack Bundle</a>
+      </div>
+      <div class="panel" role="note">
+        <div class="kicker">Heads up</div>
+        <small>Make purchases with a Solana wallet (e.g., Phantom). This is a static site; replace the payment link with your own Solana Pay URL and your treasury address. See inline comments in the code.</small>
+      </div>
+    </section>
+
+    <!-- WHAT WE DO -->
+    <section id="about" class="section">
+      <h2>What we do</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>1) You buy a bundle</h3>
+          <p class="muted">Choose a bundle below and pay in SOL using your wallet. Your TX is your spot in the next stream.</p>
+        </article>
+        <article class="card">
+          <h3>2) We open live</h3>
+          <p class="muted">Tune in to the stream. We shout out your handle, crack the packs, and celebrate the hits together.</p>
+        </article>
+        <article class="card">
+          <h3>3) We ship your pulls</h3>
+          <p class="muted">We carefully sleeve, top‑load, and ship your cards. Track highlights on‑chain via your purchase.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- TOKENOMICS -->
+    <section id="tokenomics" class="section tokenomics">
+      <h2>Tokenomics</h2>
+      <p class="muted">These are example allocations — edit in the HTML as needed.</p>
+      <div class="grid-3">
+        <div class="card stat"><span class="pill">40% Community</span> <span class="muted">airdrops, rewards, giveaways</span></div>
+        <div class="card stat"><span class="pill" style="background:var(--yellow); color:#000">25% Liquidity</span> <span class="muted">DEX liquidity & market making</span></div>
+        <div class="card stat"><span class="pill" style="background:var(--red)">20% Treasury</span> <span class="muted">stream ops, shipping, inventory</span></div>
+        <div class="card stat"><span class="pill" style="background:#5cb85c">10% Team</span> <span class="muted">vested over 12–24 months</span></div>
+        <div class="card stat"><span class="pill" style="background:#9b59b6">5% Partners</span> <span class="muted">collabs & promos</span></div>
+      </div>
+    </section>
+
+    <!-- BUY -->
+    <section id="buy" class="section packs">
+      <div>
+        <h2>Buy a Pack Bundle</h2>
+        <p class="muted">Pick your bundle size. Payment via Solana. Replace placeholders below with your <strong>Solana Pay</strong> link and <strong>treasury address</strong>.</p>
+        <div class="card bundle">
+          <div class="row radio">
+            <label><input type="radio" name="bundle" value="3" checked> 3‑Pack Bundle</label>
+            <div class="price" data-amount="0.10">0.10 SOL</div>
+          </div>
+          <div class="row radio">
+            <label><input type="radio" name="bundle" value="6"> 6‑Pack Bundle</label>
+            <div class="price" data-amount="0.18">0.18 SOL</div>
+          </div>
+          <div class="row radio">
+            <label><input type="radio" name="bundle" value="10"> 10‑Pack Bundle</label>
+            <div class="price" data-amount="0.28">0.28 SOL</div>
+          </div>
+
+          <button class="btn" id="buyBtn">Pay with Solana</button>
+          <small class="muted">Having trouble? Copy the wallet address below and include the memo shown.</small>
+          <div class="panel">
+            <div><strong>Treasury Wallet:</strong> <code id="walletAddr">4i2PVAxNXv7QhPeNp6ihj1hs7GSnhGryes5jcK7KcWgR</code></div>
+            <div><strong>Memo (Reference):</strong> <code id="memoText">PACKS-BUNDLE-3</code></div>
+            <button class="btn secondary" id="copyAddr">Copy address</button>
+          </div>
+        </div>
+        <small class="muted">By purchasing, you agree to our terms: all breaks are streamed, shipments are insured; refunds only if a TX fails.</small>
+      </div>
+      <aside>
+        <div class="card">
+          <h3>Payment notes</h3>
+          <ul class="muted">
+            <li><strong>Solana Pay link:</strong> Set <code>SOLANA_PAY_BASE</code> in the script to your generated URL (from your provider or your own link following the Solana Pay spec).</li>
+            <li>The amount auto‑updates when you choose a bundle.</li>
+            <li>We try <em>Phantom</em> first; if unavailable, we open the Solana Pay link.</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+    <!-- STREAM -->
+    <section id="stream" class="section">
+      <h2>Live Stream</h2>
+      <p class="muted">Embed your Twitch or YouTube live here.</p>
+      <div class="stream card">
+        <!-- Replace with your Twitch or YouTube embed -->
+        <!-- Example YouTube Live embed: -->
+        <!-- <iframe src="https://www.youtube.com/embed/LIVE_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+        <!-- Example Twitch embed: -->
+        <!-- <iframe src="https://player.twitch.tv/?channel=YOUR_CHANNEL&parent=YOUR_DOMAIN" frameborder="0" allowfullscreen="true" scrolling="no"></iframe> -->
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>FAQ</h2>
+      <div class="grid-3">
+        <div class="card"><strong>When do breaks happen?</strong><br><span class="muted">Check our socials for schedule. If you purchase outside of a live, you’ll be queued for the next one.</span></div>
+        <div class="card"><strong>What sets are you opening?</strong><br><span class="muted">We rotate through modern and selected vintage. Special events are announced ahead of time.</span></div>
+        <div class="card"><strong>How are cards shipped?</strong><br><span class="muted">Hits are sleeved & top‑loaded; tracked shipping worldwide. Base/bulk optional.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="panel">
+        <strong>Disclaimer:</strong> This site does not offer financial advice or guarantee returns. Pokémon is a trademark of Nintendo/Creatures/Game Freak. Packs is an independent fan project.
+      </div>
+      <p style="margin-top:12px">© <span id="year"></span> Packs. Built for Solana. Gotta catch 'em all.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ==== CONFIG – EDIT THESE ====
+    // 1) Your receiving wallet (treasury) address for manual transfers
+    const TREASURY_WALLET = 'REPLACE_WITH_YOUR_SOL_ADDRESS';
+    // 2) Your base Solana Pay URL. Many providers give you a link you can append amount & reference to.
+    // Example (placeholder): 'https://solana-pay.yourprovider.com/pay?recipient=YOUR_WALLET' 
+    // Consult your provider or Solana Pay docs for exact format. Keep as empty string to skip.
+    const SOLANA_PAY_BASE = '';
+
+    // Optional: map bundle sizes to a memo string
+    const MEMO_BY_BUNDLE = {
+      '3': 'PACKS-BUNDLE-3',
+      '6': 'PACKS-BUNDLE-6',
+      '10': 'PACKS-BUNDLE-10'
+    };
+    // ==============================
+
+    const year = document.getElementById('year');
+    year.textContent = new Date().getFullYear();
+
+    const connectBtn = document.getElementById('connectBtn');
+    const buyBtn = document.getElementById('buyBtn');
+    const copyAddr = document.getElementById('copyAddr');
+    const walletAddr = document.getElementById('walletAddr');
+    const memoText = document.getElementById('memoText');
+
+    // Update displayed wallet address from config
+    walletAddr.textContent = TREASURY_WALLET;
+
+    function getSelectedBundle(){
+      const checked = document.querySelector('input[name="bundle"]:checked');
+      const row = checked.closest('.row');
+      const amountEl = row.querySelector('.price');
+      const amount = parseFloat(amountEl.getAttribute('data-amount'));
+      return { size: checked.value, amount };
+    }
+
+    function updateMemo(){
+      const { size } = getSelectedBundle();
+      memoText.textContent = MEMO_BY_BUNDLE[size] || 'PACKS-BUNDLE-' + size;
+    }
+
+    document.querySelectorAll('input[name="bundle"]').forEach(r => r.addEventListener('change', updateMemo));
+    updateMemo();
+
+    // Phantom connect helper
+    async function connectPhantom(){
+      try{
+        const provider = window.solana;
+        if (provider && provider.isPhantom){
+          const resp = await provider.connect({ onlyIfTrusted:false });
+          connectBtn.textContent = 'Connected: ' + resp.publicKey.toString().slice(0,4) + '…' + resp.publicKey.toString().slice(-4);
+          connectBtn.disabled = true;
+          return resp.publicKey.toString();
+        } else {
+          window.open('https://phantom.app/', '_blank');
+        }
+      }catch(err){
+        alert('Wallet connection failed. Please try again.');
+        console.error(err);
+      }
+    }
+
+    connectBtn.addEventListener('click', connectPhantom);
+
+    copyAddr.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(TREASURY_WALLET);
+        copyAddr.textContent = 'Copied!';
+        setTimeout(()=>copyAddr.textContent='Copy address', 1200);
+      }catch(e){ alert('Copy failed'); }
+    });
+
+    // Attempt to pay: try Phantom deeplink if available, otherwise open Solana Pay URL (placeholder)
+    buyBtn.addEventListener('click', async () => {
+      const { size, amount } = getSelectedBundle();
+      const memo = MEMO_BY_BUNDLE[size] || ('PACKS-BUNDLE-' + size);
+
+      // If Phantom is present, try to open the app and let user send SOL manually filled
+      const provider = window.solana;
+      if (provider && provider.isPhantom){
+        // NOTE: For full in-wallet transactions, you would build and sign a transfer transaction here from your dApp backend or using @solana/web3.js.
+        // On a static site we fall back to opening the wallet and guiding the user.
+        alert('Connected wallet detected. Please send ' + amount + ' SOL to: ' + TREASURY_WALLET + '\nMemo: ' + memo);
+        return;
+      }
+
+      // Else: If you have a Solana Pay link configured, open it with parameters
+      if (SOLANA_PAY_BASE){
+        // Very generic example of appending params — adapt to your provider’s format
+        const url = new URL(SOLANA_PAY_BASE);
+        url.searchParams.set('amount', amount.toString());
+        url.searchParams.set('reference', memo);
+        window.location.href = url.toString();
+      }else{
+        alert('No wallet detected. Install Phantom or set SOLANA_PAY_BASE in the script.');
+      }
+    });
+  </script>
+</body>
+</html>
