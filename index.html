@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#FFCB05" />
   <title>Packs — Live Pokémon Pack Openings • Crypto Project on Solana $Packs</title>
   <meta name="description" content="Packs is a Solana‑powered project built around live Pokémon pack openings and the Community. Buy bundles in SOL, watch the stream on Pumpfun live, and track tokenomics." />
   <meta property="og:title" content="Packs — Live Pokémon Pack Openings" />
@@ -22,8 +23,13 @@
       --card:#ffffff;
       --muted:#5b6b7a;
       --ring: rgba(42,117,187,.25);
+      --safe-top: env(safe-area-inset-top);
+      --safe-bottom: env(safe-area-inset-bottom);
+      --maxw: 1120px;
     }
     *{box-sizing:border-box}
+    html:focus-within{scroll-behavior:smooth}
+    @media (prefers-reduced-motion: reduce){html:focus-within{scroll-behavior:auto}}
     html,body{height:100%}
     body{
       margin:0; background:
@@ -32,28 +38,51 @@
         var(--bg);
       color:var(--ink);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
     }
-    .container{max-width:1100px; margin:0 auto; padding:0 20px}
-    header{position:sticky; top:0; z-index:40; backdrop-filter:saturate(180%) blur(8px); background:rgba(255,255,255,.8); border-bottom:2px solid var(--blue)}
-    .nav{display:flex; align-items:center; justify-content:space-between; height:72px}
+    .container{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+    /* Skip link for accessibility */
+    .skip{position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden}
+    .skip:focus{left:16px; top:16px; width:auto; height:auto; background:#000; color:#fff; padding:8px 10px; border-radius:8px; z-index:1000}
+
+    header{position:sticky; top:0; z-index:40; backdrop-filter:saturate(180%) blur(8px); background:rgba(255,255,255,.9); border-bottom:2px solid var(--blue)}
+    .nav{display:flex; align-items:center; justify-content:space-between; min-height:64px}
     .brand{display:flex; align-items:center; gap:12px}
     .logo{width:36px; height:36px; border-radius:50%; background:conic-gradient(from 0deg, var(--red) 0 180deg, #fff 180deg 360deg); position:relative; box-shadow:0 10px 24px -12px var(--ring), inset 0 0 0 3px #000}
     .logo:after{content:""; position:absolute; inset:50% auto auto 50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 0 0 3px #000}
     .wordmark{font-family:"Press Start 2P", system-ui; font-size:18px; letter-spacing:1px; color:#000; text-shadow:2px 2px 0 var(--yellow), -2px -2px 0 var(--blue)}
+
+    /* Desktop nav */
     nav a{font-weight:700; color:#000; text-decoration:none; margin-left:16px}
 
-    .hero{padding:80px 0 40px; display:grid; gap:28px}
-    .hero h1{font-family:"Press Start 2P"; font-size: clamp(28px, 4.5vw, 48px); line-height:1.15; margin:0}
-    .hero p{font-size: clamp(16px, 1.6vw, 20px); color:#223; max-width:800px}
+    /* Mobile nav (hamburger) */
+    .menu-toggle{display:none}
+    .hamb{display:none; width:40px; height:40px; border:2px solid #000; background:var(--yellow); border-radius:10px; align-items:center; justify-content:center; box-shadow:4px 4px 0 #000}
+    .hamb span{display:block; width:18px; height:2px; background:#000; position:relative}
+    .hamb span:before,.hamb span:after{content:""; position:absolute; left:0; width:18px; height:2px; background:#000}
+    .hamb span:before{top:-6px} .hamb span:after{top:6px}
+
+    @media (max-width: 840px){
+      nav{position:fixed; inset:64px 0 auto 0; background:rgba(255,255,255,.98); border-bottom:2px solid #000; transform:translateY(-120%); transition:transform .25s ease; padding:12px 20px}
+      nav a{display:block; padding:12px 6px; margin:0; border-bottom:1px dashed #000}
+      .menu-toggle:checked + label + nav{transform:translateY(0)}
+      .hamb{display:inline-flex}
+    }
+
+    .hero{padding:72px 0 32px; display:grid; gap:24px}
+    .hero h1{font-family:"Press Start 2P"; font-size: clamp(26px, 4.2vw, 48px); line-height:1.15; margin:0}
+    .hero p{font-size: clamp(16px, 1.6vw, 20px); color:#223; max-width:820px}
     .cta{display:flex; gap:12px; flex-wrap:wrap}
-    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:14px; font-weight:800; border:2px solid #000; background:var(--yellow); color:#000; box-shadow:4px 4px 0 #000}
+    .btn{display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:14px 20px; border-radius:14px; font-weight:800; border:2px solid #000; background:var(--yellow); color:#000; box-shadow:4px 4px 0 #000; font-size:16px}
     .btn.secondary{background:#fff}
 
     .card{background:var(--card); border:2px solid #000; border-radius:18px; padding:20px; box-shadow:8px 8px 0 #000}
     .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 
     .section{padding:56px 0}
-    .section h2{font-family:"Press Start 2P"; font-size:26px; margin:0 0 12px}
+    .section h2{font-family:"Press Start 2P"; font-size:26px; margin:0 0 12px; scroll-margin-top:84px}
     .muted{color:var(--muted)}
 
     .tokenomics .stat{display:flex; align-items:center; gap:12px}
@@ -63,7 +92,7 @@
     .bundle{display:grid; gap:10px}
     .bundle .row{display:flex; align-items:center; justify-content:space-between; gap:8px}
     .radio{display:flex; gap:10px; align-items:center}
-    .radio input{width:18px; height:18px}
+    .radio input{width:22px; height:22px}
     .price{font-weight:800}
 
     .panel{background:linear-gradient(180deg, #fff, #f5f6ff); border:2px dashed #000; border-radius:16px; padding:14px}
@@ -72,21 +101,31 @@
     .stream{aspect-ratio:16/9; background:#000; border:2px solid #000; border-radius:16px; overflow:hidden}
     iframe{width:100%; height:100%; display:block}
 
-    footer{padding:40px 0 70px; color:#111}
+    footer{padding:40px 0 80px; color:#111}
 
-    @media (max-width: 980px){
+    /* Sticky buy button on mobile */
+    .sticky-buy{position:fixed; left:16px; right:16px; bottom:calc(16px + var(--safe-bottom)); z-index:45; display:none}
+    @media (max-width: 840px){
       .grid-3{grid-template-columns:1fr}
       .packs{grid-template-columns:1fr}
+      .sticky-buy{display:block}
     }
+
+    /* Prevent iOS zoom on inputs */
+    input, select, textarea, button{font-size:16px}
   </style>
 </head>
 <body>
+  <a href="#main" class="skip">Skip to content</a>
   <header>
     <div class="container nav">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
         <div class="wordmark">PACKS</div>
       </div>
+      <!-- Mobile hamburger -->
+      <input id="menu-toggle" class="menu-toggle" type="checkbox" aria-label="Toggle menu" />
+      <label class="hamb" for="menu-toggle" aria-hidden="true"><span></span></label>
       <nav>
         <a href="#about">What We Do</a>
         <a href="#tokenomics">Tokenomics</a>
@@ -96,7 +135,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main id="main" class="container">
     <!-- HERO -->
     <section class="hero">
       <h1>Live Pokémon Pack Openings • Powered by Solana $Packs</h1>
@@ -137,7 +176,6 @@
       <p class="muted"> We are able to sustain our stream through Pumpfun Creator Rewards - The token will be for the community. All profits from pack openings will be used for buybacks, airdrops, donations - the community decides</p>
       <div class="grid-3">
         <div class="card stat"><span class="pill">100% Community</span> <span class="muted">airdrops, donations, rewards, giveaways</span></div>
-      
       </div>
     </section>
 
@@ -145,7 +183,7 @@
     <section id="buy" class="section packs">
       <div>
         <h2>Buy a Pack Bundle</h2>
-        <p class="muted">Pick your bundle size. Payment via Solana. </strong>.</p>
+        <p class="muted">Pick your bundle size. Payment via Solana. </p>
         <div class="card bundle">
           <div class="row radio">
             <label><input type="radio" name="bundle" value="Prismatic Booster" checked> Prismatic Booster Bundle</label> 
@@ -169,18 +207,15 @@
           </div>
         </div>
       </div>
-      <br>
-      <br>
-      <small class="muted">By purchasing, you agree to our terms: all breaks are streamed, shipments are insured; refunds only if a TX fails.</small>
       <aside>
         <div class="card">
           <h3>Payment notes</h3>
           <ul class="muted">
-          
             <li> Payments are done manually through any Solana Wallet Address </li>
           </ul>
         </div>
       </aside>
+      <p class="muted" style="margin-top:16px">By purchasing, you agree to our terms: all breaks are streamed, shipments are insured; refunds only if a TX fails.</p>
     </section>
 
     <!-- STREAM -->
@@ -188,11 +223,7 @@
       <h2>Live Stream</h2>
       <p class="muted">Pumpfun live website integration coming soon!</p>
       <div class="stream card">
-        <!-- Replace with your Twitch or YouTube embed -->
-        <!-- Example YouTube Live embed: -->
-        <!-- <iframe src="https://www.youtube.com/embed/LIVE_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
-        <!-- Example Twitch embed: -->
-        <!-- <iframe src="https://player.twitch.tv/?channel=YOUR_CHANNEL&parent=YOUR_DOMAIN" frameborder="0" allowfullscreen="true" scrolling="no"></iframe> -->
+        <!-- Embed examples in original file -->
       </div>
     </section>
 
@@ -206,6 +237,9 @@
     </section>
   </main>
 
+  <!-- Sticky buy on mobile -->
+  <div class="sticky-buy container"><a class="btn" href="#buy">Buy a Pack Bundle</a></div>
+
   <footer>
     <div class="container">
       <div class="panel">
@@ -217,19 +251,9 @@
 
   <script>
     // ==== CONFIG – EDIT THESE ====
-    // 1) Your receiving wallet (treasury) address for manual transfers
     const TREASURY_WALLET = '4i2PVAxNXv7QhPeNp6ihj1hs7GSnhGryes5jcK7KcWgR';
-    // 2) Your base Solana Pay URL. Many providers give you a link you can append amount & reference to.
-    // Example (placeholder): 'https://solana-pay.yourprovider.com/pay?recipient=YOUR_WALLET' 
-    // Consult your provider or Solana Pay docs for exact format. Keep as empty string to skip.
     const SOLANA_PAY_BASE = '';
-
-    // Optional: map bundle sizes to a memo string
-    const MEMO_BY_BUNDLE = {
-      '3': 'PACKS-BUNDLE-3',
-      '6': 'PACKS-BUNDLE-6',
-      '10': 'PACKS-BUNDLE-10'
-    };
+    const MEMO_BY_BUNDLE = { '3': 'PACKS-BUNDLE-3', '6': 'PACKS-BUNDLE-6', '10': 'PACKS-BUNDLE-10', 'Prismatic Booster':'PACKS-PRISM' };
     // ==============================
 
     const year = document.getElementById('year');
@@ -241,7 +265,6 @@
     const walletAddr = document.getElementById('walletAddr');
     const memoText = document.getElementById('memoText');
 
-    // Update displayed wallet address from config
     walletAddr.textContent = TREASURY_WALLET;
 
     function getSelectedBundle(){
@@ -254,13 +277,12 @@
 
     function updateMemo(){
       const { size } = getSelectedBundle();
-      memoText.textContent = MEMO_BY_BUNDLE[size] || 'PACKS-BUNDLE-' + size;
+      memoText.textContent = MEMO_BY_BUNDLE[size] || ('PACKS-BUNDLE-' + size);
     }
 
     document.querySelectorAll('input[name="bundle"]').forEach(r => r.addEventListener('change', updateMemo));
     updateMemo();
 
-    // Phantom connect helper
     async function connectPhantom(){
       try{
         const provider = window.solana;
@@ -278,9 +300,9 @@
       }
     }
 
-    connectBtn.addEventListener('click', connectPhantom);
+    connectBtn?.addEventListener('click', connectPhantom);
 
-    copyAddr.addEventListener('click', async () => {
+    copyAddr?.addEventListener('click', async () => {
       try{
         await navigator.clipboard.writeText(TREASURY_WALLET);
         copyAddr.textContent = 'Copied!';
@@ -288,23 +310,15 @@
       }catch(e){ alert('Copy failed'); }
     });
 
-    // Attempt to pay: try Phantom deeplink if available, otherwise open Solana Pay URL (placeholder)
-    buyBtn.addEventListener('click', async () => {
+    buyBtn?.addEventListener('click', async () => {
       const { size, amount } = getSelectedBundle();
       const memo = MEMO_BY_BUNDLE[size] || ('PACKS-BUNDLE-' + size);
-
-      // If Phantom is present, try to open the app and let user send SOL manually filled
       const provider = window.solana;
       if (provider && provider.isPhantom){
-        // NOTE: For full in-wallet transactions, you would build and sign a transfer transaction here from your dApp backend or using @solana/web3.js.
-        // On a static site we fall back to opening the wallet and guiding the user.
         alert('Connected wallet detected. Please send ' + amount + ' SOL to: ' + TREASURY_WALLET + '\nMemo: ' + memo);
         return;
       }
-
-      // Else: If you have a Solana Pay link configured, open it with parameters
       if (SOLANA_PAY_BASE){
-        // Very generic example of appending params — adapt to your provider’s format
         const url = new URL(SOLANA_PAY_BASE);
         url.searchParams.set('amount', amount.toString());
         url.searchParams.set('reference', memo);
@@ -313,6 +327,11 @@
         alert('No wallet detected. Install Phantom or set SOLANA_PAY_BASE in the script.');
       }
     });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{
+      const t=document.getElementById('menu-toggle'); if(t) t.checked=false;
+    }));
   </script>
 </body>
 </html>
